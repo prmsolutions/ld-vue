@@ -1,20 +1,20 @@
-import uuid from 'uuid';
-import ip from 'ip';
-import UAParser from 'ua-parser-js';
+import uuid from 'uuid'
+import ip from 'ip'
+import UAParser from 'ua-parser-js'
 
-const userAgentParser = new UAParser();
-const isMobileDevice = typeof window !== 'undefined' && userAgentParser.getDevice().type === 'mobile';
-const isTabletDevice = typeof window !== 'undefined' && userAgentParser.getDevice().type === 'tablet';
+const userAgentParser = new UAParser()
+const isMobileDevice = typeof window !== 'undefined' && userAgentParser.getDevice().type === 'mobile'
+const isTabletDevice = typeof window !== 'undefined' && userAgentParser.getDevice().type === 'tablet'
 
 export default () => {
-  let device;
+  let device
 
   if (isMobileDevice) {
-    device = 'mobile';
+    device = 'mobile'
   } else if (isTabletDevice) {
-    device = 'tablet';
+    device = 'tablet'
   } else {
-    device = 'desktop';
+    device = 'desktop'
   }
 
   return {
@@ -22,7 +22,7 @@ export default () => {
     ip: ip.address(),
     custom: {
       browser: userAgentParser.getResult().browser.name,
-      device,
-    },
-  };
-};
+      device
+    }
+  }
+}

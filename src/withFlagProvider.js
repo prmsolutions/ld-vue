@@ -1,33 +1,28 @@
 import camelCase from 'lodash.camelcase'
-import { initLDClient, ldClient } from './initLDClient'
+import { ldClient } from './initLDClient'
 
-export default ({clientSideId, user, options}) => ({
-  data() {
+export default (_flags) => ({
+  data () {
     return {
-      flags: {},
+      flags: {}
     }
   },
 
-  provide() {
+  provide () {
     return {
-      ld: this.$data,
+      ld: this.$data
     }
   },
 
-  mounted() {
-    this.initLD()
-  },
+  mounted () {
+    this.flags = _flags
 
-  methods: {
-    initLD: async function() {
-      this.flags = await initLDClient(clientSideId, user, options);
-      ldClient.on('change', changes => {
-        const flattened = {}
-        for (const key in changes) {
-          flattened[camelCase(key)] = changes[key].current
-        }
-        this.flags = { ...this.flags, ...flattened }
-      })
-    },
-  },
+    ldClient.on('change', changes => {
+      const flattened = {}
+      for (const key in changes) {
+        flattened[camelCase(key)] = changes[key].current
+      }
+      this.flags = { ...this.flags, ...flattened }
+    })
+  }
 })
