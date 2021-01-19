@@ -4,7 +4,7 @@ import initUser from './initUser'
 
 export let ldClient
 
-export const initLDClient = async (clientSideId, user = initUser(), options) => {
+export const initLDClient = async ({ clientSideId, user = initUser(), options }) => {
   ldClient = ldClientInitialize(clientSideId, user, options)
 
   return await new Promise(resolve => ldClient.on('ready', () => {
